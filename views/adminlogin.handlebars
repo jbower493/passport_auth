@@ -1,0 +1,20 @@
+<main>
+
+  {{#if success}}
+    <div class="success-message">{{success}}</div>
+  {{/if}}
+
+  {{#if error}}
+    <div class="error-message">{{error}}</div>
+  {{/if}}
+
+  <h2>Admin Login</h2>
+  <form method="POST" action="http://localhost:5000/admins/login">
+    Email<br>
+    <input id="email" name="email" type="email" required><br>
+    Password<br>
+    <input id="password" name="password" type="password" required><br>
+    <input id="submit" type="submit" value="Login">
+  </form>
+  <div class="switch">No account? <a href="./register" id="register-link">Register</a></div>
+</main>

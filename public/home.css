@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+main {
+  margin: 50px auto;
+  padding: 20px;
+  width: 400px;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+h2 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.button {
+  padding: 5px;
+  text-align: center;
+  color: white;
+  border-radius: 5px;
+  display: block;
+  text-decoration: none;
+}
+
+#register {
+  background-color: rgb(45, 109, 48);
+}
+
+#login {
+  background-color: grey;
+  margin-top: 20px;
+}
+
+/* register / login css */
+
+input {
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid grey;
+}
+
+#submit {
+  background-color: rgb(45, 109, 48);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.switch {
+  margin: 10px 0;
+}
+
+#login-link, #register-link {
+  color: rgb(45, 109, 48);
+  text-decoration: none;
+}
+
+.error-message {
+  background-color: rgb(255, 236, 152);
+  border-left: 3px solid rgb(255, 209, 5);
+  padding: 10px;
+}
+
+.success-message {
+  background-color: rgb(198, 255, 200);
+  border-left: 3px solid rgb(32, 116, 32);
+  padding: 10px;
+}
+
+/* dashboard css */
+
+.dashboard {
+  margin: 20px auto;
+  width: 70vw;
+}
+
+p {
+  margin: 10px 0;
+}
+
+#logout {
+  padding: 5px;
+  color: white;
+  background-color: grey;
+  display: inline-block;
+  border-radius: 5px;
+  cursor: pointer;
+}

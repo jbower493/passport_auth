@@ -1,0 +1,20 @@
+<main>
+
+  {{#if error}}
+    <div class="error-message">{{error}}</div>
+  {{/if}}
+
+  <h2>Register</h2>
+  <form method="POST" action="http://localhost:5000/users/register">
+    Name<br>
+    <input id="name" name="name" type="text" value="{{#if name}}{{name}}{{/if}}" required><br>
+    Email<br>
+    <input id="email" name="email" type="email" value="{{#if email}}{{email}}{{/if}}" required><br>
+    Password<br>
+    <input id="password" name="password" type="password" required><br>
+    Confirm Password<br>
+    <input id="password2" name="password2" type="password" required><br>
+    <input id="submit" type="submit" value="Register">
+  </form>
+  <div class="switch">Have an account? <a href="./login" id="login-link">Login</a></div>
+</main>
