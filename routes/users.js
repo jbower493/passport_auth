@@ -56,7 +56,7 @@ usersRouter.get('/validate/:email', (req, res) => {
 });
 
 usersRouter.post('/register', (req, res, next) => {
-  const { name, email, password, password2 } = req.body;
+  const { name, email, password } = req.body;
 
   bcrypt.hash(password, saltRounds, (err, hash) => {
     if(err) {
