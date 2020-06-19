@@ -6,6 +6,8 @@ const password2Field = document.getElementById('reg-password2');
 const submitButton = document.getElementById('reg-submit');
 
 
+let emailTaken = false;
+
 const checkName = () => {
   if(nameField.value === '') {
     nameField.style.border = '1px solid grey';
@@ -27,8 +29,12 @@ const checkEmail = () => {
     if(xhr.readyState === XMLHttpRequest.DONE) {
       if(xhr.status == 200) {
         emailField.style.border = '1px solid green';
+        if(emailTaken) {
+          emailTaken = false;
+        }
       } else {
         emailField.style.border = '1px solid red';
+        emailTaken = true;
       }
     }
   }
@@ -56,6 +62,11 @@ const checkPasswords = () => {
 };
 
 const validation = (e) => {
+  const message = document.getElementsByClassName('message-box')[0];
+  if(message) {
+    message.remove();
+  }
+
   const errors = [];
   if(nameField.value === '' || emailField.vaule === '' || passwordField.value === '' || password2Field.value === '') {
     errors.push('Please fill in all fields.');
@@ -63,26 +74,33 @@ const validation = (e) => {
   if(!emailField.value.includes('@')) {
     errors.push('Email address not valid.');
   }
+  if(emailTaken) {
+    errors.push('Email address already in use.');
+  }
   if(passwordField.value.length < 6) {
     errors.push('Password must be at least 6 characters.');
   }
   if(passwordField.value !== password2Field.value) {
     errors.push('Passwords do not match.');
   }
+  // if any errors, stop form submitting and alert first error, if not, allow form submission
   if(errors.length > 0) {
     e.preventDefault();
-    return alert(errors[0]);
+    const div = document.createElement('div');
+    div.classList.add('message-box');
+    const p = document.createElement('p');
+    p.classList.add('error-message');
+    const span = document.createElement('span');
+    span.innerHTML = 'x';
+    span.addEventListener('click', (e) => {
+      e.target.parentElement.parentElement.remove();
+    });
+    p.innerHTML = errors[0];
+    p.appendChild(span);
+    div.appendChild(p);
+    const main = document.getElementsByTagName('main')[0];
+    main.insertBefore(div, main.childNodes[0]);
   }
-  const url = '/users/register';
-  const data = {
-    name: nameField.value,
-    email: emailField.value,
-    password: passwordField.value
-  };
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', url);
-  xhr.setRequestHeader('Content-Type', 'applictaion/json');
-  xhr.send(data);
 };
 
 

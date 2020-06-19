@@ -1,8 +1,10 @@
 <main>
 
   {{#if error}}
-    <div class="error-message">{{error}}</div>
+    <div class="message-box"><p class="error-message">{{error}}<span id="close">x</span></p></div>
   {{/if}}
+
+  <!--<div class="message-box"><p class="success-msg">{{success}}<i id="close" class="fas fa-times"></i></p></div>-->
 
   <h2>Register</h2>
   <form method="POST" action="http://localhost:5000/users/register">

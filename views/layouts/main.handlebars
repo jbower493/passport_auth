@@ -7,5 +7,15 @@
   </head>
   <body>
     {{{body}}}
+
+    <script>
+      // flash messages
+      const closeButton = document.getElementById('close');
+      if(closeButton) {
+        closeButton.addEventListener('click', (e) => {
+          e.target.parentElement.parentElement.remove();
+        });
+      }
+    </script>
   </body>
 </html>
