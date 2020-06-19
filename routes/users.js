@@ -40,49 +40,40 @@ usersRouter.get('/register', (req, res, next) => {
   res.render('register');
 });
 
+usersRouter.get('/validate/:email', (req, res) => {
+  const email = req.params.email;
+
+  db.query('SELECT id FROM users WHERE email = ?', email, (err, results) => {
+    if(err) {
+      throw err;
+    }
+    if(results.length == 0) {
+      res.send();
+    } else {
+      res.status(403).send('Email in use');
+    }
+  });
+});
+
 usersRouter.post('/register', (req, res, next) => {
   const { name, email, password, password2 } = req.body;
 
-  if(password.length < 6) {
-    return res.render('register', {
-      error: 'Password must be at least 6 characters.',
-      name: name,
-      email: email
-    });
-  }
-  if(password !== password2) {
-    return res.render('register', {
-      error: 'Passwords do not match.',
-      name: name,
-      email: email
-    });
-  }
-  
-  db.query('SELECT * FROM users WHERE email = ?', email, (err, result) => {
+  bcrypt.hash(password, saltRounds, (err, hash) => {
     if(err) {
       console.log(err);
       res.render('register', { error: 'Server error, apologies.' });
-    } else if(result.length > 0) {
-      res.render('register', { error: 'Email already in use.' });
     } else {
-      bcrypt.hash(password, saltRounds, (err, hash) => {
+      db.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [
+        name,
+        email,
+        hash
+      ], (err, result) => {
         if(err) {
           console.log(err);
           res.render('register', { error: 'Server error, apologies.' });
         } else {
-          db.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [
-            name,
-            email,
-            hash
-          ], (err, result) => {
-            if(err) {
-              console.log(err);
-              res.render('register', { error: 'Server error, apologies.' });
-            } else {
-              req.flash('message', 'You successfully registered and can now login.');
-              res.status(201).redirect('/users/login');
-            }
-          });
+          req.flash('message', 'You successfully registered and can now login.');
+          res.status(201).redirect('/users/login');
         }
       });
     }
