@@ -20,7 +20,7 @@ const checkEmail = () => {
   if(emailField.value === '') {
     return emailField.style.border = '1px solid grey';
   }
-  if(!emailField.value.includes('@')) {
+  if(!emailField.value.includes('@') || emailField.value.indexOf('@') === emailField.value.length - 1) {
     return emailField.style.border = '1px solid red';
   }
   const url = `/users/validate/${emailField.value}`;
@@ -71,7 +71,7 @@ const validation = (e) => {
   if(nameField.value === '' || emailField.vaule === '' || passwordField.value === '' || password2Field.value === '') {
     errors.push('Please fill in all fields.');
   }
-  if(!emailField.value.includes('@')) {
+  if(!emailField.value.includes('@') || emailField.value.indexOf('@') === emailField.value.length - 1) {
     errors.push('Email address not valid.');
   }
   if(emailTaken) {
