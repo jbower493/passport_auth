@@ -60,15 +60,13 @@ usersRouter.post('/register', (req, res, next) => {
   
   db.query('SELECT * FROM useraaa WHERE email = ?', email, (err, result) => {
     if(err) {
-      console.log(err);
-      res.render('register', { error: 'Server error, apologies.' });
+      next(err);
     } else if(result.length > 0) {
       res.render('register', { error: 'Email already in use.' });
     } else {
       bcrypt.hash(password, saltRounds, (err, hash) => {
         if(err) {
-          console.log(err);
-          res.render('register', { error: 'Server error, apologies.' });
+          next(err);
         } else {
           db.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [
             name,
@@ -76,8 +74,7 @@ usersRouter.post('/register', (req, res, next) => {
             hash
           ], (err, result) => {
             if(err) {
-              console.log(err);
-              res.render('register', { error: 'Server error, apologies.' });
+              next(err);
             } else {
               req.flash('message', 'You successfully registered and can now login.');
               res.status(201).redirect('/users/login');

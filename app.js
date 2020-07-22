@@ -23,6 +23,11 @@ const ensureAuthenticated = (req, res, next) => {
   }
 };
 
+const errorHandler = (err, req, res, next) => {
+  console.log(err);
+  res.render('error');
+};
+
 app.use(express.urlencoded({extended: false}));
 
 app.use(session({
@@ -60,6 +65,8 @@ app.get('/logout', (req, res, next) => {
   req.flash('message', 'You have logged out.');
   res.redirect('/',);
 });
+
+app.use(errorHandler);
 
 
 app.listen(PORT, () => {
