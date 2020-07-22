@@ -58,7 +58,7 @@ usersRouter.post('/register', (req, res, next) => {
     });
   }
   
-  db.query('SELECT * FROM users WHERE email = ?', email, (err, result) => {
+  db.query('SELECT * FROM useraaa WHERE email = ?', email, (err, result) => {
     if(err) {
       console.log(err);
       res.render('register', { error: 'Server error, apologies.' });
