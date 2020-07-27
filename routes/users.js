@@ -13,7 +13,10 @@ const db = mysql.createConnection({
   database: 'passport_auth'
 });
 
-db.connect(() => {
+db.connect((err) => {
+  if(err) {
+    console.log(err);
+  }
   console.log('Mysql connected');
 });
 
@@ -58,7 +61,7 @@ usersRouter.post('/register', (req, res, next) => {
     });
   }
   
-  db.query('SELECT * FROM useraaa WHERE email = ?', email, (err, result) => {
+  db.query('SELECT * FROM users WHERE email = ?', email, (err, result) => {
     if(err) {
       next(err);
     } else if(result.length > 0) {

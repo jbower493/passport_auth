@@ -11,7 +11,10 @@ const db = mysql.createConnection({
   database: 'passport_auth'
 });
 
-db.connect(() => {
+db.connect((err) => {
+  if(err) {
+    console.log(err);
+  }
   console.log('Mysql connected');
 });
 

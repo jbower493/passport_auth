@@ -7,6 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const handlebars = require('express-handlebars');
 const passportMain = require('./config/passport.js');
+const { log, handleError } = require('./logger.js');
 
 const app = express();
 
@@ -21,11 +22,6 @@ const ensureAuthenticated = (req, res, next) => {
     req.flash('error', 'You need to be logged in to view this page.');
     res.redirect('/users/login');
   }
-};
-
-const errorHandler = (err, req, res, next) => {
-  console.log(err);
-  res.render('error');
 };
 
 app.use(express.urlencoded({extended: false}));
@@ -46,11 +42,15 @@ app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(log);
+
 app.use('/users', usersRouter);
 app.use('/admins', adminsRouter);
 
 
 app.get('/', (req, res, next) => {
+  throw new Error('Error city');
   res.render('home', { success: req.flash('message') });
 });
 
@@ -66,7 +66,7 @@ app.get('/logout', (req, res, next) => {
   res.redirect('/',);
 });
 
-app.use(errorHandler);
+app.use(handleError);
 
 
 app.listen(PORT, () => {
