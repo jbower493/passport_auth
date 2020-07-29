@@ -1,6 +1,8 @@
+const datemaker = require('datemaker');
+
 const logger = {
   log(req, res, next) {
-    console.log(`${req.method} ${req.path} ${req.ip}`);
+    console.log(`${req.method} ${req.path} ${req.ip} - ${datemaker.local()}`);
     next();
   },
 

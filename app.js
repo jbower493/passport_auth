@@ -50,7 +50,6 @@ app.use('/admins', adminsRouter);
 
 
 app.get('/', (req, res, next) => {
-  throw new Error('Error city');
   res.render('home', { success: req.flash('message') });
 });
 
